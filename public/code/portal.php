@@ -1,7 +1,7 @@
 <?php
 require_once('../config/tce_config.php');
 $thispage_title = "School Assessment Portal";
-$pagelevel = 1;
+$pagelevel = 0; // Publicly accessible landing page
 require_once('../../shared/code/tce_authorization.php');
 require_once('tce_xhtml_header.php');
 ?>
@@ -247,17 +247,24 @@ require_once('tce_xhtml_header.php');
     <!-- Student Header -->
     <div class="student-header">
         <div class="student-profile">
-            <img src="../images/student_avatar.png" alt="Student Avatar" class="student-avatar">
+            <img src="<?php echo K_PATH_URL; ?>images/student_avatar.png" alt="Student Avatar" class="student-avatar">
             <div class="welcome-msg">
-                <h2>Welcome Back!</h2>
-                <p>Ready to excel in your assessments today?</p>
+                <?php if ($_SESSION['session_user_id'] > 1): ?>
+                    <h2>Welcome Back, <?php echo $_SESSION['session_user_name']; ?>!</h2>
+                    <p>Ready to excel in your assessments today?</p>
+                <?php else: ?>
+                    <h2>Welcome to Our School</h2>
+                    <p>Select your grade below to view available assessments.</p>
+                <?php endif; ?>
             </div>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
             <?php if ($_SESSION['session_user_level'] >= 10): ?>
-                <a href="../../admin/code/index.php" style="text-decoration: none; background: rgba(255,255,255,0.2); color: #1e293b; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; border: 1px solid rgba(0,0,0,0.1);">Admin Dashboard</a>
+                <a href="../../admin/code/index.php" style="text-decoration: none; background: #1e293b; color: white; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: all 0.3s ease;" class="admin-btn">Admin Dashboard</a>
+            <?php elseif ($_SESSION['session_user_id'] <= 1): ?>
+                <a href="../../admin/code/index.php" style="text-decoration: none; background: rgba(255,255,255,0.2); color: #1e293b; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.85rem; border: 1px solid rgba(0,0,0,0.1);" class="staff-btn">Staff Login</a>
             <?php endif; ?>
-            <div class="portal-tag">Student Portal</div>
+            <div class="portal-tag">Portal</div>
         </div>
     </div>
 
