@@ -134,6 +134,12 @@ div.content {
     box-shadow: var(--shadow);
     width: 100% !important;
     float: none !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+div.content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -148,6 +154,13 @@ label,
 select,
 .stat-card {
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.2);
+    border-color: var(--primary);
 }
 
 input[type="text"], 
@@ -158,6 +171,14 @@ textarea {
     border-radius: 8px;
     border: 1px solid #e2e8f0;
     font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    transform: translateY(-1px);
 }
 
 input[type="submit"], 
@@ -170,13 +191,15 @@ button {
     padding: 10px 20px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 0.85rem;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+button:hover {
     background: #0f172a;
-    transform: translateY(-1px);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.2);
 }
 
 /* Data Tables */
