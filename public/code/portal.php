@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $thispage_title = "School Assessment Portal";
+$pagelevel = 1;
+require_once('../../shared/code/tce_authorization.php');
 require_once('tce_xhtml_header.php');
 ?>
 

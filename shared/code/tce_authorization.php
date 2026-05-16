@@ -351,42 +351,28 @@ if ($pagelevel) { // pagelevel=0 means access to anonymous user
 }
 
 if ($logged) { //if user is just logged in: reloads page
+    // Smart Redirection based on User Level
+    $redirect_url = K_PATH_HOST.'public/code/portal.php'; // Default for students
+    
+    if ($_SESSION['session_user_level'] >= 10) {
+        $redirect_url = K_PATH_HOST.'admin/code/index.php'; // Admin Dashboard
+    }
+    
     // html redirect
     $htmlredir = '<'.'?xml version="1.0" encoding="'.$l['a_meta_charset'].'"?'.'>'.K_NEWLINE;
     $htmlredir .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'.K_NEWLINE;
     $htmlredir .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$l['a_meta_language'].'" lang="'.$l['a_meta_language'].'" dir="'.$l['a_meta_dir'].'">'.K_NEWLINE;
     $htmlredir .= '<head>'.K_NEWLINE;
     $htmlredir .= '<title>ENTER</title>'.K_NEWLINE;
-    $htmlredir .= '<meta http-equiv="refresh" content="0" />'.K_NEWLINE; //reload page
+    $htmlredir .= '<meta http-equiv="refresh" content="0;url='.$redirect_url.'" />'.K_NEWLINE; //reload page
     $htmlredir .= '</head>'.K_NEWLINE;
     $htmlredir .= '<body>'.K_NEWLINE;
-    $htmlredir .= '<a href="'.$_SERVER['SCRIPT_NAME'].'">ENTER</a>'.K_NEWLINE;
+    $htmlredir .= '<a href="'.$redirect_url.'">ENTER</a>'.K_NEWLINE;
     $htmlredir .= '</body>'.K_NEWLINE;
     $htmlredir .= '</html>'.K_NEWLINE;
-    switch (K_REDIRECT_LOGIN_MODE) {
-        case 1: {
-            // relative redirect
-            header('Location: '.$_SERVER['SCRIPT_NAME']);
-            break;
-        }
-        case 2: {
-            // absolute redirect
-            header('Location: '.K_PATH_HOST.$_SERVER['SCRIPT_NAME']);
-            break;
-        }
-        case 3: {
-            // html redirect
-            echo $htmlredir;
-            break;
-        }
-        case 4:
-        default: {
-            // full redirect
-            header('Location: '.K_PATH_HOST.$_SERVER['SCRIPT_NAME']);
-            echo $htmlredir;
-            break;
-        }
-    }
+    
+    header('Location: '.$redirect_url);
+    echo $htmlredir;
     exit;
 }
 
