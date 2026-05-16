@@ -183,6 +183,56 @@ require_once('tce_xhtml_header.php');
         font-size: 1.5rem;
     }
 
+    .student-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px 30px;
+        border-radius: 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    }
+
+    .student-profile {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .student-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        object-fit: cover;
+    }
+
+    .welcome-msg h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #1e293b;
+    }
+
+    .welcome-msg p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.9rem;
+    }
+
+    .portal-tag {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
     @keyframes fadeInDown {
         from { opacity: 0; transform: translateY(-20px); }
         to { opacity: 1; transform: translateY(0); }
@@ -195,6 +245,18 @@ require_once('tce_xhtml_header.php');
 </style>
 
 <div class="portal-container">
+    <!-- Student Header -->
+    <div class="student-header">
+        <div class="student-profile">
+            <img src="../images/student_avatar.png" alt="Student Avatar" class="student-avatar">
+            <div class="welcome-msg">
+                <h2>Welcome Back!</h2>
+                <p>Ready to excel in your assessments today?</p>
+            </div>
+        </div>
+        <div class="portal-tag">Student Portal</div>
+    </div>
+
     <div class="portal-header">
         <p>Welcome to</p>
         <h1>Secondary School Assessment</h1>
