@@ -82,6 +82,9 @@ echo '<meta name="description" content="'."\x5b\x54\x43\x45\x78\x61\x6d\x5d".' '
 echo '<meta name="author" content="nick"/>'.K_NEWLINE;
 echo '<meta name="reply-to" content="'.htmlspecialchars($thispage_reply, ENT_COMPAT, $l['a_meta_charset']).'" />'.K_NEWLINE;
 echo '<meta name="keywords" content="'.htmlspecialchars($thispage_keywords, ENT_COMPAT, $l['a_meta_charset']).'" />'.K_NEWLINE;
+echo '<link rel="preconnect" href="https://fonts.googleapis.com">'.K_NEWLINE;
+echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'.K_NEWLINE;
+echo '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">'.K_NEWLINE;
 echo '<link rel="stylesheet" href="'.$thispage_style.'" type="text/css" />'.K_NEWLINE;
 echo '<link rel="shortcut icon" href="'.$thispage_icon.'" />'.K_NEWLINE;
 // calendar
