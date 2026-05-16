@@ -1,331 +1,207 @@
-/*
-//============================================================+
-// File name   : default.css
-// Begin       : 2004-04-27
-// Last Update : 2012-07-25
-//
-// Description : Default CSS for admin area.
-//
-// Author: Nicola Asuni
-//
-// (c) Copyright:
-//               Nicola Asuni
-//               Tecnick.com LTD
-//               www.tecnick.com
-//               info@tecnick.com
-//
-// License:
-//    Copyright (C) 2004-2011 Nicola Asuni - Tecnick.com LTD
-//    See LICENSE.TXT file for more information.
-//============================================================+
-*/
-
-a {
-	color: #0060BF;
-	text-decoration: none;
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #a855f7;
+    --background: #f8fafc;
+    --surface: rgba(255, 255, 255, 0.8);
+    --border: rgba(255, 255, 255, 0.3);
+    --text: #1e293b;
+    --text-light: #64748b;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
-a:visited {
-	color: #0060BF;
-	text-decoration: none;
-}
-
-a:hover {
-	color: #FF8000;
-	text-decoration: underline;
-}
-
-/* delete link ------------ */
-a.deletebutton:link, a.deletebutton:visited {
-	border: 1px solid #000000;
-	color: #003399;
-	font-size: 75%;
-	padding: 0px 3px 0px 3px;
-	text-decoration: none;
-}
-
-a.deletebutton:hover {
-	background-color: #B22222;
-	color: #FFFFFF;
-}
-
-a.minibutton span {
-	background-color: #FFCC66;
-	color: #000000;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 2px 0px 2px;
-	text-decoration: none;
-}
-
-a.minibutton:link, a.minibutton:visited, a.minibutton:hover {
-	background: #FFFFFF;
-	border: 1px solid #000000;
-	color: #000000;
-	font-family: Arial,FreeSans,sans-serif;
-	font-size: 9px;
-	padding: 0px 0px 0px 3px;
-	text-decoration: none;
-}
-
-a.tcecode{
-}
-
-a.tcecode:visited{
-}
-
-a.tcecode:hover{
-}
-
-a.white {
-	color: #FFFFFF;
-	font-size: 5px;
-}
-
-a.white:visited {
-	color: #FFFFFF;
-}
-
-a.white:hover {
-	color: #FFFFFF;
-}
-
-a.xmlbutton:link, a.xmlbutton:visited {
-	background-color: #D3D3D3;
-	border: 1px solid;
-	border-color: #FFFFFF #696969 #696969 #FFFFFF;
-	color: #000000;
-	font-size: 95%;
-	margin: 0px 0px 0px 0px;
-	padding: 2px 4px 2px 4px;
-	text-decoration: none;
-}
-
-a.xmlbutton:hover {
-	background-color: #DDEEFF;
-}
-
-acronym.nobox {
-	background-color: #F08080;
-	border: 1px solid;
-	border-color: #000000;
-	color: #000000;
-	font-family: monospace;
-	font-size: 95%;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 4px 0px 4px;
-	text-decoration: none;
-}
-
-acronym.offbox {
-	background-color: #EEEEEE;
-	border: 1px solid;
-	border-color: #000000;
-	color: #000000;
-	font-family: monospace;
-	font-size: 95%;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 4px 0px 4px;
-	text-decoration: none;
-}
-
-acronym.okbox {
-	background-color: #90EE90;
-	border: 1px solid;
-	border-color: #000000;
-	color: #000000;
-	font-family: monospace;
-	font-size: 95%;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 4px 0px 4px;
-	text-decoration: none;
-}
-
-acronym.onbox {
-	background-color: #ADD8E6;
-	border: 1px solid;
-	border-color: #000000;
-	color: #000000;
-	font-family: monospace;
-	font-size: 95%;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 4px 0px 4px;
-	text-decoration: none;
-}
-
-b.tcecode{
-}
-
-blockquote.tcecode{
+* {
+    box-sizing: border-box;
 }
 
 body {
-	background-color: #FFFFFF;
-	color: #000000;
-	font-family: Arial,FreeSans,sans-serif;
-	font-size: 100%;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	padding-right: 0px;
-	padding-top: 0px;
+    background-color: var(--background);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.05) 0px, transparent 50%);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
 }
 
-/* BODY ------------ */
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* Admin Header */
+div.header {
+    background: #0f172a;
+    height: auto;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+div.header div.left {
+    background-image: none;
+    width: auto;
+    height: auto;
+    float: none;
+    margin: 0;
+}
+
+div.header div.left::before {
+    content: "Admin Center";
+    color: white;
+    font-weight: 800;
+    font-size: 1.25rem;
+}
+
+div.header div.right {
+    width: auto;
+    height: auto;
+    float: none;
+    margin: 0;
+    background-color: transparent;
+}
+
+div.header div.right input {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* Admin Menu */
+.scrollmenu {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0 20px;
+}
+
+ul.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+ul.menu li a {
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+ul.menu li a:hover {
+    color: var(--primary);
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 8px;
+}
+
+/* Main Layout */
 div.body {
-	clear: both;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-	width: 99%;
+    width: 100%;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
-/*  confirmation box for delete/cancel action  ------------------- */
-div.confirmbox {
-	background-color: #99FF99;
-	margin: 0px 0px 0px 0px;
-	padding: 3px 3px 3px 3px;
-	text-align: center;
-	width: 100%;
-}
-
-/* DIV container:
-contains form box and help box */
 div.container {
-	margin: 0px 0px 0px 0px;
-	padding: 5px 5px 5px 5px;
-	width: 99%;
-	overflow:auto
+    width: 100%;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
 div.content {
-	float: left;
-	margin: 0px 0px 0px 0px;
-	padding: 5px 15px 5px 15px;
-	text-align: left;
-	width: 98%;
-	box-sizing: border-box
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    width: 100% !important;
+    float: none !important;
 }
 
-/* ---------- */
-div.creditslogos {
-	text-align: center;
+h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    color: #0f172a;
 }
 
-/*  SYSTEM MESSAGES  ------------------- */
-div.error {
-	background-color: #FF9999;
-	font-size: 95%;
-	font-weight: bold;
-	margin: 0px 0px 0px 0px;
-	padding: 3px 3px 3px 3px;
-	width: 100%;
+/* Control Buttons & Inputs */
+input[type="text"], 
+input[type="password"], 
+select, 
+textarea {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 0.95rem;
 }
 
-div.float {
-	float: left;
-	padding-bottom: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
+input[type="submit"], 
+input[type="button"], 
+button {
+    background: #1e293b;
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85rem;
 }
 
-/* header (logo + timer) ------------ */
-div.header {
-	background-color: #003399;
-	border: 0px none;
-	height: 40px;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-	width: 100%;
+input[type="submit"]:hover {
+    background: #0f172a;
+    transform: translateY(-1px);
 }
 
-/* header logo ------------ */
-div.header div.left {
-	background-color: #003399;
-	background-image: url(../../images/logo_tcexam_118x25.png);
-	background-position: top;
-	background-repeat: no-repeat;
-	border: 0px none;
-	float: left;
-	height: 25px;
-	margin: 4px 0px 0px 4px;
-	padding: 0px 0px 0px 0px;
-	text-align: left;
-	width: 118px;
+/* Data Tables */
+table {
+    width: 100% !important;
+    border-collapse: collapse;
 }
 
-/* header banner ------------ */
-div.header div.right {
-	background-color: #003399;
-	border: 0px none;
-	float: right;
-	height: 25px;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-	text-align: right;
-	width: 400px;
+th {
+    background: #f8fafc;
+    padding: 12px;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
 }
 
-div.header div.right input{
-	background-color: #003399;
-	border: 0px none;
-	color: #FFFFFF;
-	font-size: 100%;
-	font-weight: bold;
-	text-align: right;
+td {
+    padding: 12px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.9rem;
 }
 
-div.message {
-	background-color: #99CCFF;
-	font-size: 95%;
-	font-weight: bold;
-	margin: 0px 0px 0px 0px;
-	padding: 3px 3px 3px 3px;
-	width: 100%;
-}
-
-/* W3C logos ------------ */
-div.minibutton {
-	clear: both;
-	margin: 0px 0px 0px 0px;
-	text-align: center;
-}
-
-div.minibutton span.copyright {
-	background: #FFFFFF;
-	color: #000000;
-	font-family: Arial,FreeSans,sans-serif;
-	font-size: 70%;
-	text-decoration: none;
-}
-
-div.navlink {
-	font-size: 95%;
-	font-weight: bold;
-}
-
-/* PAGE HELP ------------------------------- */
+/* Help Box */
 div.pagehelp {
-	background-color: #DDEEFF;
-	border: 1px dotted #808080;
-	color: #333333;
-	font-size: 80%;
-	margin: 5px 0px 0px 0px;
-	padding: 5px 5px 5px 5px;
-	width: 100%;
-	text-align:justify;
-	box-sizing: border-box
-}
-
-/* Page selector --------------------------*/
-div.pageselector {
-	font-size: 95%;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-	text-align: center;
-	width: 90%;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 0.85rem;
+    color: #475569;
 }
 
 div.popupcontainer {
