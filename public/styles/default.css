@@ -150,6 +150,13 @@ h1 {
 }
 
 /* Form Elements & Buttons */
+label, 
+select,
+.grade-card,
+.course-item {
+    cursor: pointer;
+}
+
 input[type="text"], 
 input[type="password"], 
 select, 

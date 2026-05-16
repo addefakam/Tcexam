@@ -171,6 +171,7 @@ require_once('tce_xhtml_header.php');
         gap: 15px;
         transition: all 0.2s;
         border: 1px solid #e2e8f0;
+        cursor: pointer;
     }
 
     .course-item:hover {

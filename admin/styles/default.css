@@ -144,6 +144,12 @@ h1 {
 }
 
 /* Control Buttons & Inputs */
+label,
+select,
+.stat-card {
+    cursor: pointer;
+}
+
 input[type="text"], 
 input[type="password"], 
 select, 
