@@ -113,7 +113,9 @@ if ($rs = F_db_query($sqls, $db)) {
                 $htmlredir .= '<a href="'.$logout_url.'">LOGOUT...</a>'.K_NEWLINE;
                 $htmlredir .= '</body>'.K_NEWLINE;
                 $htmlredir .= '</html>'.K_NEWLINE;
-                header('Location: '.$logout_url);
+                if (!headers_sent()) {
+                    header('Location: '.$logout_url);
+                }
                 echo $htmlredir;
                 exit;
             }
@@ -251,8 +253,8 @@ if (isset($_POST['logaction']) and ($_POST['logaction'] == 'login') and isset($_
                                 $_SESSION['session_user_name'] = $md['user_name'];
                                 $_SESSION['session_user_ip'] = getNormalizedIP($_SERVER['REMOTE_ADDR']);
                                 $_SESSION['session_user_level'] = $md['user_level'];
-                                $_SESSION['session_user_firstname'] = urlencode($md['user_firstname']);
-                                $_SESSION['session_user_lastname'] = urlencode($md['user_lastname']);
+                                $_SESSION['session_user_firstname'] = urlencode(''.$md['user_firstname']);
+                                $_SESSION['session_user_lastname'] = urlencode(''.$md['user_lastname']);
                                 $_SESSION['session_last_visit'] = 0;
                                 $_SESSION['session_test_login'] = '';
                                 $logged = true;
@@ -308,8 +310,8 @@ if (isset($_POST['logaction']) and ($_POST['logaction'] == 'login') and isset($_
                             $_SESSION['session_user_name'] = F_escape_sql($db, $_POST['xuser_name']);
                             $_SESSION['session_user_ip'] = getNormalizedIP($_SERVER['REMOTE_ADDR']);
                             $_SESSION['session_user_level'] = intval($altusr['user_level']);
-                            $_SESSION['session_user_firstname'] = urlencode($altusr['user_firstname']);
-                            $_SESSION['session_user_lastname'] = urlencode($altusr['user_lastname']);
+                            $_SESSION['session_user_firstname'] = urlencode(''.$altusr['user_firstname']);
+                            $_SESSION['session_user_lastname'] = urlencode(''.$altusr['user_lastname']);
                             $_SESSION['session_last_visit'] = 0;
                             $_SESSION['session_test_login'] = '';
                             $logged = true;
