@@ -8,47 +8,52 @@ require_once('tce_page_header.php');
 // Simple pattern-based parser
 function parseWordText($text) {
     $questions = [];
-    // Split by numbers followed by a dot or parenthesis (e.g. 1. or 1)) or just numbers at start of line
-    $blocks = preg_split('/(\n\s*\d+[\.\)])|(\n\s*Question\s*\d+[:\.]?)/i', "\n".$text, -1, PREG_SPLIT_NO_EMPTY);
+    $lines = explode("\n", $text);
+    $currentQuestion = null;
     
-    foreach ($blocks as $block) {
-        $lines = explode("\n", trim($block));
-        if (count($lines) < 2) continue;
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if (empty($line)) continue;
         
-        $question_text = trim(preg_replace('/^(\d+[\.\)]|Question\s*\d+[:\.]?)\s*/i', '', $lines[0]));
-        if (empty($question_text)) continue;
-
-        $q = [
-            'text' => $question_text,
-            'answers' => []
-        ];
-        
-        for ($i = 1; $i < count($lines); $i++) {
-            $line = trim($lines[$i]);
-            if (empty($line)) continue;
-            
-            // Detect answer patterns like A) B. (A) etc.
-            if (preg_match('/^[\(\[\s]*([A-Z0-9])[\.\)\s\]]+\s*(.*)$/i', $line, $matches)) {
-                $is_correct = (strpos($line, '*') !== false || 
-                              preg_match('/\b(correct|true|yes)\b/i', $line));
+        // 1. Check if it's an Answer line (A) B. etc)
+        if (preg_match('/^[\(\[\s]*([A-Z0-9])[\.\)\s\]]+\s*(.*)$/i', $line, $matches)) {
+            if ($currentQuestion !== null) {
+                $is_correct = (strpos($line, '*') !== false || preg_match('/\b(correct|true|yes)\b/i', $line));
+                $answer_text = trim(preg_replace('/\b(correct|true|yes)\b/i', '', str_replace('*', '', $matches[2])));
                 
-                $answer_text = trim($matches[2]);
-                // Clean up any remaining "correct" markers from the text
-                $answer_text = trim(preg_replace('/\b(correct|true|yes)\b/i', '', str_replace('*', '', $answer_text)));
-                
-                if (!empty($answer_text)) {
-                    $q['answers'][] = [
-                        'text' => $answer_text,
-                        'is_correct' => $is_correct
-                    ];
-                }
+                $currentQuestion['answers'][] = [
+                    'text' => $answer_text,
+                    'is_correct' => $is_correct
+                ];
+                continue;
             }
         }
         
-        if (!empty($q['answers'])) {
-            $questions[] = $q;
+        // 2. Check if it's a new Question line (starts with 1. or 1) or Question 1:)
+        if (preg_match('/^(\d+[\.\)]|Question\s*\d+[:\.]?)\s*(.*)$/i', $line, $matches)) {
+            // Save previous question if it has answers
+            if ($currentQuestion !== null && !empty($currentQuestion['answers'])) {
+                $questions[] = $currentQuestion;
+            }
+            
+            $currentQuestion = [
+                'text' => trim($matches[2]),
+                'answers' => []
+            ];
+            continue;
+        }
+        
+        // 3. If it doesn't match above, it might be a multi-line question text or description
+        if ($currentQuestion !== null && empty($currentQuestion['answers'])) {
+            $currentQuestion['text'] .= " " . $line;
         }
     }
+    
+    // Add the last question
+    if ($currentQuestion !== null && !empty($currentQuestion['answers'])) {
+        $questions[] = $currentQuestion;
+    }
+    
     return $questions;
 }
 
