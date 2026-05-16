@@ -1,7 +1,7 @@
 <?php
 require_once('../config/tce_config.php');
 $page_title = "School Assessment Portal";
-require_once('../code/tce_xhtml_header.php');
+require_once('tce_xhtml_header.php');
 ?>
 
 <style>
@@ -254,5 +254,5 @@ require_once('../code/tce_xhtml_header.php');
 </script>
 
 <?php
-require_once('../code/tce_xhtml_footer.php');
+require_once('tce_xhtml_footer.php');
 ?>
