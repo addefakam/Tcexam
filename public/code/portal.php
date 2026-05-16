@@ -6,36 +6,39 @@ require_once('tce_page_header.php');
 
 <style>
     .portal-container {
+        width: 100%;
         max-width: 1200px;
         margin: 40px auto;
         padding: 0 20px;
+        box-sizing: border-box;
         font-family: 'Inter', sans-serif;
     }
 
     .portal-header {
         text-align: center;
-        margin-bottom: 60px;
+        margin-bottom: 40px;
         animation: fadeInDown 0.8s ease-out;
     }
 
     .portal-header h1 {
-        font-size: 3rem;
+        font-size: clamp(2rem, 8vw, 3.5rem);
         font-weight: 800;
         background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 10px;
+        line-height: 1.2;
     }
 
     .portal-header p {
         color: #64748b;
-        font-size: 1.2rem;
+        font-size: clamp(1rem, 3vw, 1.2rem);
     }
 
     .grade-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
         margin-bottom: 50px;
     }
 
@@ -44,7 +47,7 @@ require_once('tce_page_header.php');
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 24px;
-        padding: 40px;
+        padding: 30px;
         text-align: center;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
@@ -54,14 +57,14 @@ require_once('tce_page_header.php');
     }
 
     .grade-card:hover {
-        transform: translateY(-10px);
+        transform: translateY(-8px);
         box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.3);
         background: rgba(255, 255, 255, 0.9);
         border-color: #6366f1;
     }
 
     .grade-card h2 {
-        font-size: 4rem;
+        font-size: clamp(3rem, 10vw, 4.5rem);
         margin: 0;
         color: #1e293b;
         font-weight: 900;
@@ -69,12 +72,37 @@ require_once('tce_page_header.php');
 
     .grade-card span {
         display: block;
-        font-size: 1.1rem;
+        font-size: 0.9rem;
         color: #64748b;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-bottom: 10px;
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 768px) {
+        .portal-container {
+            margin: 20px auto;
+        }
+        .grade-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .grade-card {
+            padding: 20px;
+            border-radius: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grade-grid {
+            grid-template-columns: 1fr;
+        }
+        .course-modal {
+            padding: 20px;
+            width: 95%;
+        }
     }
 
     .course-overlay {
@@ -89,16 +117,19 @@ require_once('tce_page_header.php');
         justify-content: center;
         align-items: center;
         z-index: 1000;
+        padding: 20px;
     }
 
     .course-modal {
         background: #f8fafc;
-        width: 90%;
-        max-width: 800px;
+        width: 100%;
+        max-width: 700px;
         border-radius: 32px;
         padding: 40px;
         animation: scaleIn 0.3s ease-out;
         position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
     .close-modal {
