@@ -83,6 +83,16 @@ require_once('tce_page_header.php');
         </div>
     </div>
 
+    <div style="margin-bottom: 40px;">
+        <h3 style="color: #475569; margin-bottom: 20px;">Quick Actions</h3>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="tce_ai_importer.php" style="text-decoration: none; background: #4f46e5; color: white; padding: 16px 24px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2); transition: all 0.3s ease;" class="quick-action-btn">
+                <span>✨ AI Question Importer</span>
+                <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 6px; font-size: 0.7rem;">Word to XML</span>
+            </a>
+        </div>
+    </div>
+
     <div class="charts-row">
         <div class="chart-container">
             <h3 style="margin-top:0">System Distribution</h3>
