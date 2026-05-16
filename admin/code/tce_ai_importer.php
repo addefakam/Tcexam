@@ -8,15 +8,18 @@ require_once('tce_page_header.php');
 // Simple pattern-based parser
 function parseWordText($text) {
     $questions = [];
-    // Split by numbers followed by a dot or parenthesis (e.g. 1. or 1))
-    $blocks = preg_split('/(?=\d+[\.\)])/', $text, -1, PREG_SPLIT_NO_EMPTY);
+    // Split by numbers followed by a dot or parenthesis (e.g. 1. or 1)) or just numbers at start of line
+    $blocks = preg_split('/(\n\s*\d+[\.\)])|(\n\s*Question\s*\d+[:\.]?)/i', "\n".$text, -1, PREG_SPLIT_NO_EMPTY);
     
     foreach ($blocks as $block) {
         $lines = explode("\n", trim($block));
         if (count($lines) < 2) continue;
         
+        $question_text = trim(preg_replace('/^(\d+[\.\)]|Question\s*\d+[:\.]?)\s*/i', '', $lines[0]));
+        if (empty($question_text)) continue;
+
         $q = [
-            'text' => trim(preg_replace('/^\d+[\.\)]\s*/', '', $lines[0])),
+            'text' => $question_text,
             'answers' => []
         ];
         
@@ -24,13 +27,21 @@ function parseWordText($text) {
             $line = trim($lines[$i]);
             if (empty($line)) continue;
             
-            // Detect answer patterns like A) B. etc
-            if (preg_match('/^([A-Z])[.\)]\s*(.*)$/i', $line, $matches)) {
-                $is_correct = (strpos($line, '*') !== false || strpos(strtolower($line), '(correct)') !== false);
-                $q['answers'][] = [
-                    'text' => trim(str_replace(['*', '(correct)', '(Correct)'], '', $matches[2])),
-                    'is_correct' => $is_correct
-                ];
+            // Detect answer patterns like A) B. (A) etc.
+            if (preg_match('/^[\(\[\s]*([A-Z0-9])[\.\)\s\]]+\s*(.*)$/i', $line, $matches)) {
+                $is_correct = (strpos($line, '*') !== false || 
+                              preg_match('/\b(correct|true|yes)\b/i', $line));
+                
+                $answer_text = trim($matches[2]);
+                // Clean up any remaining "correct" markers from the text
+                $answer_text = trim(preg_replace('/\b(correct|true|yes)\b/i', '', str_replace('*', '', $answer_text)));
+                
+                if (!empty($answer_text)) {
+                    $q['answers'][] = [
+                        'text' => $answer_text,
+                        'is_correct' => $is_correct
+                    ];
+                }
             }
         }
         
