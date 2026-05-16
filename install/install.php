@@ -149,29 +149,36 @@ if (isset($_REQUEST['forceinstall']) AND ($_REQUEST['forceinstall'] == 1)) {
 		}
 	} else { //form has not been submitted
 		//initialize variables to default values
-		$_REQUEST['db_type'] = 'MYSQL';
-		$_REQUEST['db_host'] = 'localhost';
-		$_REQUEST['db_port'] = '3306';
-		$_REQUEST['db_user'] = 'root';
-		$_REQUEST['db_password'] = '';
-		$_REQUEST['database_name'] = 'tcexam';
+		$_REQUEST['db_type'] = getenv('DATABASE_TYPE') ?: 'MYSQL';
+		$_REQUEST['db_host'] = getenv('DATABASE_HOST') ?: 'localhost';
+		$_REQUEST['db_port'] = getenv('DATABASE_PORT') ?: '3306';
+		$_REQUEST['db_user'] = getenv('DATABASE_USER') ?: 'root';
+		$_REQUEST['db_password'] = getenv('DATABASE_PASSWORD') ?: '';
+		$_REQUEST['database_name'] = getenv('DATABASE_NAME') ?: 'tcexam';
 		$_REQUEST['table_prefix'] = 'tce_';
-		if (isset($_SERVER['HTTP_HOST']) and !empty($_SERVER['HTTP_HOST'])) {
-			if(isset($_SERVER['HTTPS']) AND !empty($_SERVER['HTTPS']) AND strtolower($_SERVER['HTTPS'])!='off') {
-				$_REQUEST['path_host'] = 'https://';
-			} else {
-				$_REQUEST['path_host'] = 'http://';
-			}
-			$_REQUEST['path_host'] .= $_SERVER['HTTP_HOST'];
-		} else {
-			$_REQUEST['path_host'] = 'http://localhost';
+		
+		// Dynamic host detection
+		$proto = 'http';
+		if (
+			(isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) ||
+			(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		) {
+			$proto = 'https';
 		}
+		
+		if (isset($_SERVER['HTTP_HOST']) and !empty($_SERVER['HTTP_HOST'])) {
+			$_REQUEST['path_host'] = $proto.'://'.$_SERVER['HTTP_HOST'];
+		} else {
+			$_REQUEST['path_host'] = $proto.'://localhost';
+		}
+		
 		$_REQUEST['path_tcexam'] = substr($_SERVER['SCRIPT_NAME'], 0, -19);
-		$_REQUEST['path_main'] = substr(str_replace('\\', '/', dirname(__FILE__)), 0, -7);
+		$_REQUEST['path_main'] = str_replace('\\', '/', substr(dirname(__FILE__), 0, -7));
+		
 		$httphost = explode(':', $_SERVER['HTTP_HOST']);
 		if(isset($httphost[1]) AND !empty($httphost[1])) {
 			$_REQUEST['standard_port'] = $httphost[1];
-		} elseif(isset($_SERVER['HTTPS']) AND !empty($_SERVER['HTTPS']) AND strtolower($_SERVER['HTTPS']) != 'off') {
+		} elseif($proto === 'https') {
 			$_REQUEST['standard_port'] = 443;
 		} else {
 			$_REQUEST['standard_port'] = 80;
