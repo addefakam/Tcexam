@@ -257,7 +257,12 @@ require_once('tce_xhtml_header.php');
                 <p>Ready to excel in your assessments today?</p>
             </div>
         </div>
-        <div class="portal-tag">Student Portal</div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <?php if ($_SESSION['session_user_level'] >= 10): ?>
+                <a href="../../admin/code/index.php" style="text-decoration: none; background: rgba(255,255,255,0.2); color: #1e293b; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; border: 1px solid rgba(0,0,0,0.1);">Admin Dashboard</a>
+            <?php endif; ?>
+            <div class="portal-tag">Student Portal</div>
+        </div>
     </div>
 
     <div class="portal-header">

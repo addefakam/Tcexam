@@ -345,7 +345,17 @@ if ((K_AUTH_SSL_LEVEL !== false) and (K_AUTH_SSL_LEVEL <= $pagelevel)) {
 if ($pagelevel) { // pagelevel=0 means access to anonymous user
     // pagelevel >= 1
     if ($_SESSION['session_user_level'] < $pagelevel) { //check user level
-        // To gain access to a specific resource, the user's level must be equal or greater to the one specified for the requested resource.
+        if ($_SESSION['session_user_id'] > 1) {
+            // The user is already logged in but has insufficient level
+            // Redirect to their respective home page
+            $redirect_url = K_PATH_HOST.'public/code/portal.php';
+            if ($_SESSION['session_user_level'] >= 10) {
+                $redirect_url = K_PATH_HOST.'admin/code/index.php';
+            }
+            header('Location: '.$redirect_url);
+            exit;
+        }
+        // User is not logged in or anonymous
         F_login_form(); //display login form
     }
 }
