@@ -75,7 +75,7 @@ function FJ_timer() {
 			diff_seconds = "0" + diff_seconds;
 		}
 		// display countdown string on form field
-		document.getElementById('timerform').timer.value = ''+sign+''+diff_hours+':'+diff_minutes+':'+diff_seconds+' ';
+		document.getElementById('timerform').timer.value = ''+sign+''+diff_hours+':'+diff_minutes+' ';
 	} else { // --- CLOCK MODE ---
 		var localtime = new Date();
 		var today = new Date((localtime.getTime() + time_diff));
@@ -101,7 +101,7 @@ function FJ_timer() {
 			second = '0'+second;
 		}
 		// display clock string on form field
-		document.getElementById('timerform').timer.value = ''+year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+		document.getElementById('timerform').timer.value = ''+year+'-'+month+'-'+day+' '+hour+':'+minute;
 	}
 	return;
 }
