@@ -1,7 +1,11 @@
 <?php
 require_once('../config/tce_config.php');
+// Start session to prevent undefined session errors
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $thispage_title = "School Assessment Portal";
-require_once('tce_page_header.php');
+require_once('tce_xhtml_header.php');
 ?>
 
 <style>
@@ -285,5 +289,6 @@ require_once('tce_page_header.php');
 </script>
 
 <?php
-require_once('tce_page_footer.php');
+echo '</body>'.K_NEWLINE;
+echo '</html>'.K_NEWLINE;
 ?>
