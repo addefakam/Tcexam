@@ -172,6 +172,9 @@ div.header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 div.header div.left {
@@ -209,6 +212,9 @@ div.header div.right input {
     background: white;
     border-bottom: 1px solid #e2e8f0;
     padding: 0 20px;
+    position: sticky;
+    top: 50px; /* Adjust based on header height */
+    z-index: 999;
 }
 
 ul.menu {
