@@ -218,8 +218,8 @@ if (isset($_POST['logaction']) and ($_POST['logaction'] == 'login') and isset($_
                     $_SESSION['session_user_name'] = $m['user_name'];
                     $_SESSION['session_user_ip'] = getNormalizedIP($_SERVER['REMOTE_ADDR']);
                     $_SESSION['session_user_level'] = $m['user_level'];
-                    $_SESSION['session_user_firstname'] = urlencode($m['user_firstname']);
-                    $_SESSION['session_user_lastname'] = urlencode($m['user_lastname']);
+                    $_SESSION['session_user_firstname'] = urlencode(''.$m['user_firstname']);
+                    $_SESSION['session_user_lastname'] = urlencode(''.$m['user_lastname']);
                     $_SESSION['session_test_login'] = '';
                     // read client cookie
                     if (isset($_COOKIE['LastVisit'])) {
