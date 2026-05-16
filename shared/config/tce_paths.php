@@ -34,10 +34,15 @@
 if (!isset($_SERVER['HTTP_HOST'])) {
     $_SERVER['HTTP_HOST'] = 'localhost';
 }
-if (!isset($_SERVER['HTTPS'])) {
-    $_SERVER['HTTPS'] = 'off';
+// Detect protocol (support for proxies like Railway)
+$proto = 'http';
+if (
+    (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) ||
+    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+    (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+) {
+    $proto = 'https';
 }
-$proto = ($_SERVER['HTTPS'] === 'on' || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
 define('K_PATH_HOST', $proto.'://'.$_SERVER['HTTP_HOST']);
 
 /**
