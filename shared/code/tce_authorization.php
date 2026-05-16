@@ -348,9 +348,9 @@ if ($pagelevel) { // pagelevel=0 means access to anonymous user
         if ($_SESSION['session_user_id'] > 1) {
             // The user is already logged in but has insufficient level
             // Redirect to their respective home page
-            $redirect_url = K_PATH_HOST.'public/code/portal.php';
+            $redirect_url = K_PATH_URL.'public/code/portal.php';
             if ($_SESSION['session_user_level'] >= 10) {
-                $redirect_url = K_PATH_HOST.'admin/code/index.php';
+                $redirect_url = K_PATH_URL.'admin/code/index.php';
             }
             header('Location: '.$redirect_url);
             exit;
@@ -362,10 +362,10 @@ if ($pagelevel) { // pagelevel=0 means access to anonymous user
 
 if ($logged) { //if user is just logged in: reloads page
     // Smart Redirection based on User Level
-    $redirect_url = K_PATH_HOST.'public/code/portal.php'; // Default for students
+    $redirect_url = K_PATH_URL.'public/code/portal.php'; // Default for students
     
     if ($_SESSION['session_user_level'] >= 10) {
-        $redirect_url = K_PATH_HOST.'admin/code/index.php'; // Admin Dashboard
+        $redirect_url = K_PATH_URL.'admin/code/index.php'; // Admin Dashboard
     }
     
     // html redirect

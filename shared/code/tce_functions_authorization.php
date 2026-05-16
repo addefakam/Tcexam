@@ -56,7 +56,7 @@ function F_loginForm($faction, $fid, $fmethod, $fenctype, $username)
     // Header Section with Logo/Avatar
     $str .= '        <div class="login-header">'.K_NEWLINE;
     $str .= '            <div class="login-avatar-circle">'.K_NEWLINE;
-    $str .= '                <img src="../../images/student_avatar.png" alt="Portal">'.K_NEWLINE;
+    $str .= '                <img src="'.K_PATH_URL.'images/student_avatar.png" alt="Portal">'.K_NEWLINE;
     $str .= '            </div>'.K_NEWLINE;
     $str .= '            <h1>Sign In</h1>'.K_NEWLINE;
     $str .= '            <p>Secondary School Assessment Portal</p>'.K_NEWLINE;
@@ -86,7 +86,7 @@ function F_loginForm($faction, $fid, $fmethod, $fenctype, $username)
 
     $str .= '            <div class="form-actions">'.K_NEWLINE;
     if (defined('K_PASSWORD_RESET') and K_PASSWORD_RESET) {
-        $str .= '                <a href="../../public/code/tce_password_reset.php" class="forgot-link">'.$l['w_forgot_password'].'</a>'.K_NEWLINE;
+        $str .= '                <a href="'.K_PATH_URL.'public/code/tce_password_reset.php" class="forgot-link">'.$l['w_forgot_password'].'</a>'.K_NEWLINE;
     }
     $str .= '                <button type="submit" name="login" id="login" class="login-submit-btn">'.$l['w_login'].'</button>'.K_NEWLINE;
     $str .= '                <input type="hidden" name="logaction" id="logaction" value="login" />'.K_NEWLINE;
