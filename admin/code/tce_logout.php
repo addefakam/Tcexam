@@ -40,7 +40,7 @@ session_destroy();
 setcookie('PHPSESSID', '', 1, K_COOKIE_PATH, K_COOKIE_DOMAIN, K_COOKIE_SECURE);
 
 if (!isset($current_page)) {
-    $current_page = '../code/index.php?logout=1';
+    $current_page = '../../public/code/portal.php?logout=1';
 } elseif (strpos($current_page, '?') === false) {
     $current_page .= '?logout=1';
 } else {
