@@ -34,11 +34,13 @@
  */
 
 // PHP session settings
-//ini_set('session.save_handler', 'user');
-ini_set('session.name', 'PHPSESSID');
-//ini_set('session.gc_maxlifetime', K_SESSION_LIFE);
-//ini_set('session.cookie_lifetime', K_COOKIE_EXPIRE);
-ini_set('session.use_cookies', true);
+if (session_status() == PHP_SESSION_NONE) {
+    //ini_set('session.save_handler', 'user');
+    ini_set('session.name', 'PHPSESSID');
+    //ini_set('session.gc_maxlifetime', K_SESSION_LIFE);
+    //ini_set('session.cookie_lifetime', K_COOKIE_EXPIRE);
+    ini_set('session.use_cookies', true);
+}
 
 /**
  * Open session.
@@ -281,7 +283,9 @@ function F_getCSRFToken()
 // ------------------------------------------------------------
 
 // Sets user-level session storage functions.
-session_set_save_handler('F_session_open', 'F_session_close', 'F_session_read', 'F_session_write', 'F_session_destroy', 'F_session_gc');
+if (session_status() == PHP_SESSION_NONE) {
+    session_set_save_handler('F_session_open', 'F_session_close', 'F_session_read', 'F_session_write', 'F_session_destroy', 'F_session_gc');
+}
 
 // start user session
 if (isset($_COOKIE['PHPSESSID'])) {
@@ -302,11 +306,18 @@ if (isset($_REQUEST['PHPSESSID'])) {
 
 if ((!isset($_REQUEST['menu_mode'])) or ($_REQUEST['menu_mode'] != 'startlongprocess')) {
     // fix flush problem on long processes
-    session_id($PHPSESSID); //set session id
+    if (session_status() == PHP_SESSION_NONE) {
+        session_id($PHPSESSID); //set session id
+    }
 }
 
-session_start(); //start session
-header('Cache-control: private'); // fix IE6 bug
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); //start session
+}
+
+if (!headers_sent()) {
+    header('Cache-control: private'); // fix IE6 bug
+}
 
 //============================================================+
 // END OF FILE
