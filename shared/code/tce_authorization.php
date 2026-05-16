@@ -92,19 +92,28 @@ if ($rs = F_db_query($sqls, $db)) {
         // track when user request logout
         if (isset($_REQUEST['logout'])) {
             $_SESSION['logout'] = true;
-            if (strlen(K_LOGOUT_URL) > 0) {
+            $logout_url = K_LOGOUT_URL;
+            if (empty($logout_url)) {
+                // Smart detect current portal
+                if (strpos($_SERVER['SCRIPT_NAME'], '/admin/') !== false) {
+                    $logout_url = K_PATH_URL.'admin/code/index.php';
+                } else {
+                    $logout_url = K_PATH_URL.'public/code/portal.php';
+                }
+            }
+            if (strlen($logout_url) > 0) {
                 $htmlredir = '<'.'?xml version="1.0" encoding="'.$l['a_meta_charset'].'"?'.'>'.K_NEWLINE;
                 $htmlredir .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">'.K_NEWLINE;
                 $htmlredir .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.$l['a_meta_language'].'" lang="'.$l['a_meta_language'].'" dir="'.$l['a_meta_dir'].'">'.K_NEWLINE;
                 $htmlredir .= '<head>'.K_NEWLINE;
                 $htmlredir .= '<title>LOGOUT</title>'.K_NEWLINE;
-                $htmlredir .= '<meta http-equiv="refresh" content="0;url='.K_LOGOUT_URL.'" />'.K_NEWLINE;
+                $htmlredir .= '<meta http-equiv="refresh" content="0;url='.$logout_url.'" />'.K_NEWLINE;
                 $htmlredir .= '</head>'.K_NEWLINE;
                 $htmlredir .= '<body>'.K_NEWLINE;
-                $htmlredir .= '<a href="'.K_LOGOUT_URL.'">LOGOUT...</a>'.K_NEWLINE;
+                $htmlredir .= '<a href="'.$logout_url.'">LOGOUT...</a>'.K_NEWLINE;
                 $htmlredir .= '</body>'.K_NEWLINE;
                 $htmlredir .= '</html>'.K_NEWLINE;
-                header('Location: '.K_LOGOUT_URL);
+                header('Location: '.$logout_url);
                 echo $htmlredir;
                 exit;
             }
@@ -361,12 +370,8 @@ if ($pagelevel) { // pagelevel=0 means access to anonymous user
 }
 
 if ($logged) { //if user is just logged in: reloads page
-    // Smart Redirection based on User Level
-    $redirect_url = K_PATH_URL.'public/code/portal.php'; // Default for students
-    
-    if ($_SESSION['session_user_level'] >= 10) {
-        $redirect_url = K_PATH_URL.'admin/code/index.php'; // Admin Dashboard
-    }
+    // Context-Aware Redirection
+    $redirect_url = $_SERVER['SCRIPT_NAME'];
     
     // html redirect
     $htmlredir = '<'.'?xml version="1.0" encoding="'.$l['a_meta_charset'].'"?'.'>'.K_NEWLINE;
