@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Start buffering to prevent early output from breaking redirects
 //============================================================+
 // File name   : tce_authorization.php
 // Begin       : 2001-09-26
@@ -114,6 +115,7 @@ if ($rs = F_db_query($sqls, $db)) {
                 $htmlredir .= '</body>'.K_NEWLINE;
                 $htmlredir .= '</html>'.K_NEWLINE;
                 if (!headers_sent()) {
+                    ob_end_clean(); // Clear any warnings from the buffer
                     header('Location: '.$logout_url);
                 }
                 echo $htmlredir;
@@ -388,6 +390,9 @@ if ($logged) { //if user is just logged in: reloads page
     $htmlredir .= '</body>'.K_NEWLINE;
     $htmlredir .= '</html>'.K_NEWLINE;
     
+    if (!headers_sent()) {
+        ob_end_clean(); // Clear any warnings from the buffer
+    }
     header('Location: '.$redirect_url);
     echo $htmlredir;
     exit;
